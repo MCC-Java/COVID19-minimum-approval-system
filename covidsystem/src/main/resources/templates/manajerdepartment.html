@@ -116,6 +116,38 @@ The above copyright notice and this permission notice shall be included in all c
                         </div>
                     </div>
                 </nav>
+
+                <!--start of modal-->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Request Perubahan Kuota</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Anda memilih untuk merubah Kuota <b>Department <span th:text="${user.Department.Name}"></span></b> yang sekarang berjumlah <b><span th:text="${user.Department.Quota}"></span></b></p>
+                                <p style="color:red">Anda hanya bisa memiliki 1 request kuota aktif. </p>
+                            </div>
+                            <form th:action="@{'/manajer/saverequest/'+${user.Id}}" th:object="${request}" style=" padding: 10px 10px 10px 10px" method="post" >
+
+                                <label>Kuota</label>
+                                <input type="text" id="textId" class="form-control" th:field="*{quota}" required>
+                                <label>Note</label>
+                                <input type="text" id="textId" class="form-control" th:field="*{note}" required>
+
+                                <br><br>
+
+                                <div class="modal-footer">
+                                    <input type="submit" value="Save" class="button btn btn-secondary">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- End Navbar -->
                 <div class="content">
                     <div class="container-fluid">
@@ -145,13 +177,17 @@ The above copyright notice and this permission notice shall be included in all c
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-outline-secondary" style="margin-top: 0px;margin-left: 700px;"data-toggle="modal" data-target="#exampleModal" >Request Tambah Kuota</button>
+                        <button type="submit" class="btn btn-outline-secondary" style="margin-top: 0px;margin-left: 700px;"data-toggle="modal" data-target="#exampleModal" >Request Perubahan Quota</button>
+
+                        <p th:if="${tipedatasalah}" style="color: red; margin-left: 500px"><b> Insert Request Kuota Gagal! Mohon isi Kuota dengan angka</b></p>
+                        <p th:if="${lebih}" style="color: red; margin-left: 0px"><b> Insert Request Kuota Gagal! Anda masih memiliki request kuota active, mohon tunggu sampai di accept/ reject oleh admin. </b></p>
+                        <p th:if="${sukses}" style="color: red; margin-left: 0px"><b> Selamat, Insert Request Kuota berhasil! Anda bisa memantau di history request kuota untuk melihat jawaban admin. </b></p>
                         <div class="card card-body">
                             <div class="card-header card-header-danger card-header-icon ">
                                 <div class="card-icon">
                                     <i class="material-icons">info</i>
                                 </div>
-                                <h4 class="card-title">LIST KARYAWAN DEPARTMENT <span th:text="${dept.Name}"></span>
+                                <h4 class="card-title">List Karyawan Department <span th:text="${dept.Name}"></span>
                                 </h4>
                             </div>
                         </div>
@@ -214,6 +250,47 @@ The above copyright notice and this permission notice shall be included in all c
                         </table>
 
                     </div>
+
+                    <div class="card card-body">
+                        <div class="card-header card-header-danger card-header-icon ">
+                            <div class="card-icon">
+                                <i class="material-icons">info</i>
+                            </div>
+                            <h4 class="card-title">History Request Kuota Department <span th:text="${dept.Name}"></span>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table id="table_id3" class="display">
+                            <thead class=" text-primary">
+                                <tr>
+                                    <th>ID Req</th>
+                                    <th>ID Manajer</th>
+                                    <th>ID Admin</th>
+                                    <th>Department</th>
+                                    <th>Req Kuota</th>
+                                    <th>Manajer Note</th>
+                                    <th>Admin Note</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="act : ${his}" method="GET">
+                                    <td th:text="${act.Id}"></td>
+                                    <td th:text="${act.Manajer.Id}"></td>
+                                    <td th:text="${act.Pic.Id}"></td>
+                                    <td th:text="${act.Manajer.Manajer.Department.Name}"></td>
+                                    <td th:text="${act.Quota}"></td>
+                                    <td th:text="${act.Manajernote}"></td>
+                                    <td th:text="${act.Picnote}"></td>
+                                    <td th:text="${act.Status}"></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
                 </div>
 
                 <footer class="footer">
@@ -227,49 +304,8 @@ The above copyright notice and this permission notice shall be included in all c
 
             </div>
         </div>
-         <!--start of modal-->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Insert Pertanyaan</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form th:action="@{'/admin/savequestion/'+${user.Id}}" th:object="${question}" style=" padding: 10px 10px 10px 10px" method="post" >
 
-                            <label>Pertanyaan</label>
-                            <input type="text" id="textId" class="form-control" th:field="*{Question}" required>
-                            <fieldset class="form-group" required>
-                                <div class="row">
-                                    <label style="margin-left: 10px">Group Pertanyan</label>
-                                    <div class="col-sm-10">
-                                        <div class="radio">
-                                            <input type="radio" id="negatif-rb" name="optradio" th:value="Covid" th:field="*{Section}"/>
-                                            <label for="negatif-rb">Covid</label>
-                                        </div>
-                                        <div class="radio">
-                                            <input type="radio" id="reaktif-rb" name="optradio" th:value="Urgency" th:field="*{Section}"/>
-                                            <label for="reaktif-rb">Urgency</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <label>Bobot</label>
-                            <input type="text" id="textId" class="form-control" th:field="*{Weight}" required>
-                           
-                            <br><br>
-                            <p th:if="${error}" class="error">Gagal Insert, Terjadi Error</p>
 
-                        <div class="modal-footer">
-                             <input type="submit" value="Save" class="button btn btn-secondary">
-                        </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        
     </body>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="/assets/js/core/jquery.min.js"></script>
@@ -321,6 +357,9 @@ The above copyright notice and this permission notice shall be included in all c
         $('#table_id2').DataTable();
         });
 
+        $(document).ready(function () {
+        $('#table_id3').DataTable();
+        });
     </script>
 </body>
 

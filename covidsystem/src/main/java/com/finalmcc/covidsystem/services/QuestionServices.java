@@ -13,7 +13,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 /**
  *
  * @author JESSI
@@ -21,31 +20,39 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class QuestionServices {
-    
+
     @Autowired
     QuestionRepository questionrepo;
-    
+
     @Autowired
     EmployeeRepository emprepo;
-    
-    public List<Question> getactive(){
+
+    public List<Question> getactive() {
         return questionrepo.findactive();
     }
-    
-    public List<Question> getnonactive(){
+
+    public List<Question> getnonactive() {
         return questionrepo.findnonactive();
     }
-    
-    public void ubahkenonactive(String user, String kode){
+
+    public void ubahkenonactive(String user, String kode) {
         questionrepo.ubahkenonaktif(user, Integer.parseInt(kode));
     }
-    
-    public void ubahkeactive(String user, String id){
+
+    public void ubahkeactive(String user, String id) {
         questionrepo.ubahkeaktif(user, Integer.parseInt(id));
     }
-    
-    public void save(Question question, String id){
+
+    public void save(Question question, String id) {
         Question que = new Question(question.getQuestion(), question.getSection(), question.getWeight(), "True", emprepo.findById(id).get());
         questionrepo.save(que);
-    }    
+    }
+
+    public List<Question> getcovidactive() {
+        return questionrepo.findcovidactive();
+    }
+
+    public List<Question> geturgencyactive() {
+        return questionrepo.findurgencyactive();
+    }
 }

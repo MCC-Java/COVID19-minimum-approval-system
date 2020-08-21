@@ -145,7 +145,7 @@ The above copyright notice and this permission notice shall be included in all c
                                     <h6 class="card-title">Berikut adalah Data Karyawan yang sudah mengisi untuk konfirmasi
                                         MasukKerja besok.
                                         <br> Mohon maskimalkan kuota tiap department. Besok adalah jadwal untuk <b><u>Group
-                                                A</u></b><br> Berikut adalah Department untuk besok beserta kuota.
+                                                <span th:text="${group}"></span></u></b><br> Berikut adalah Department untuk besok beserta kuota.
                                     </h6>
                                 </div>
                             </div>
@@ -154,8 +154,8 @@ The above copyright notice and this permission notice shall be included in all c
                             <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="card card-stats">
                                     <div class="card-header card-header-danger card-header-icon">
-                                        <h1 class="card-category">Metrodata Mengajar</h1>
-                                        <h3 class="card-title">0/5</h3></span>
+                                        <h1 class="card-category"><span th:text="${dept1.Name}"></span></h1>
+                                        <h3 class="card-title"><span th:text="${emp1}"></span>/<span th:text="${dept1.Quota}"></span></h3>
                                     </div>
                                 </div>
                             </div>
@@ -163,8 +163,8 @@ The above copyright notice and this permission notice shall be included in all c
                             <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="card card-stats">
                                     <div class="card-header card-header-danger card-header-icon">
-                                        <h1 class="card-category">Teller</h1>
-                                        <h3 class="card-title">0/2</h3></span>
+                                        <h1 class="card-category"><span th:text="${dept2.Name}"></span></h1>
+                                        <h3 class="card-title"><span th:text="${emp2}"></span>/<span th:text="${dept2.Quota}"></span></h3>
                                     </div>
                                 </div>
                             </div>
@@ -172,8 +172,8 @@ The above copyright notice and this permission notice shall be included in all c
                             <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="card card-stats">
                                     <div class="card-header card-header-danger card-header-icon">
-                                        <h1 class="card-category">Security</h1>
-                                        <h3 class="card-title">0/2</h3></span>
+                                        <h1 class="card-category"><span th:text="${dept3.Name}"></span></h1>
+                                        <h3 class="card-title"><span th:text="${emp3}"></span>/<span th:text="${dept3.Quota}"></span></h3>
                                     </div>
                                 </div>
                             </div>
@@ -194,22 +194,23 @@ The above copyright notice and this permission notice shall be included in all c
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Row 1 Data 1</td>
-                                        <td>Row 1 Data 2</td>
-                                        <td>Row 1 Data 1</td>
-                                        <td>Row 1 Data 2</td>
-                                        <td>Row 1 Data 1</td>
-                                        <td>Row 1 Data 2</td>
-                                        <td>Row 1 Data 1</td>
-                                        <td>Row 1 Data 1</td>
+                                    <tr th:each="act : ${listentry}" method="GET">
+                                        <td th:text="${act.Id}"></td>
+                                        <td th:text="${act.Datetime}"></td>
+                                        <td th:text="${act.Employee.Id}"></td>
+                                        <td th:text="${act.Covidweight}"></td>
+                                        <td th:text="${act.Urgencyweight}"></td>
+                                        <td th:text="${act.Employee.Department.Id}"></td>
+                                        <td th:text="${act.Employee.Countentrybymonth}"></td>
+                                        <td th:text="${act.Employeenote}"></td>
+
                                         <td class="td-actions text-right">
                                             <button type="button" rel="tooltip" title="Accept"
-                                                    class="btn btn-success btn-link btn-sm">
+                                                    class="btn btn-success btn-link btn-sm" th:attr="onclick=|accept('${user.Id}','${act.Id}');|">
                                                 <i class="material-icons">check_circle</i>
                                             </button>
                                             <button type="button" rel="tooltip" title="Reject"
-                                                    class="btn btn-danger btn-link btn-sm">
+                                                    class="btn btn-danger btn-link btn-sm" th:attr="onclick=|reject('${user.Id}','${act.Id}');|">
                                                 <i class="material-icons">cancel</i>
                                             </button>
                                         </td>
@@ -219,6 +220,94 @@ The above copyright notice and this permission notice shall be included in all c
                             </table>
 
                         </div>
+                        
+                         <div class="col-md-12">
+                            <div class="card card-stats">
+                                <div class="card-header card-header-primary">
+                                    <h4 class="card-title ">Entry Karyawan ACCEPTED untuk besok</h4>
+                                    <br>
+                                    <h6 class="card-title">Berikut adalah Data Karyawan yang sudah anda ACCEPT hari ini
+                                        </h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table id="table_id2" class="display">
+                                <thead class=" text-primary">
+                                    <tr>
+                                        <th>ID Data</th>
+                                        <th>Date Time</th>
+                                        <th>ID Karyawan</th>
+                                        <th>Bobot Covid</th>
+                                        <th>Bobot Penting</th>
+                                        <th>Department</th>
+                                        <th>Masuk Bulan Ini</th>
+                                        <th>Note</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="act : ${acctoday}" method="GET">
+                                        <td th:text="${act.Id}"></td>
+                                        <td th:text="${act.Datetime}"></td>
+                                        <td th:text="${act.Employee.Id}"></td>
+                                        <td th:text="${act.Covidweight}"></td>
+                                        <td th:text="${act.Urgencyweight}"></td>
+                                        <td th:text="${act.Employee.Department.Id}"></td>
+                                        <td th:text="${act.Employee.Countentrybymonth}"></td>
+                                        <td th:text="${act.Employeenote}"></td>
+
+                                        
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                        
+                        <div class="col-md-12">
+                            <div class="card card-stats">
+                                <div class="card-header card-header-primary">
+                                    <h4 class="card-title ">Entry Karyawan REJECTED untuk besok</h4>
+                                    <br>
+                                    <h6 class="card-title">Berikut adalah Data Karyawan yang sudah anda REJECT hari ini
+                                        </h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table id="table_id3" class="display">
+                                <thead class=" text-primary">
+                                    <tr>
+                                        <th>ID Data</th>
+                                        <th>Date Time</th>
+                                        <th>ID Karyawan</th>
+                                        <th>Bobot Covid</th>
+                                        <th>Bobot Penting</th>
+                                        <th>Department</th>
+                                        <th>Masuk Bulan Ini</th>
+                                        <th>Note</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="act : ${rejecttoday}" method="GET">
+                                        <td th:text="${act.Id}"></td>
+                                        <td th:text="${act.Datetime}"></td>
+                                        <td th:text="${act.Employee.Id}"></td>
+                                        <td th:text="${act.Covidweight}"></td>
+                                        <td th:text="${act.Urgencyweight}"></td>
+                                        <td th:text="${act.Employee.Department.Id}"></td>
+                                        <td th:text="${act.Employee.Countentrybymonth}"></td>
+                                        <td th:text="${act.Employeenote}"></td>
+
+                                        
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                        
+                        
                     </div>
 
                     <footer class="footer">
@@ -282,13 +371,57 @@ The above copyright notice and this permission notice shall be included in all c
         $('#table_id').DataTable();
         });
 
-    </script>
-    <script>
-        $(document).ready(function () {
-        // Javascript method's body can be found in assets/js/demos.js
-        md.initDashboardPageCharts();
 
+        $(document).ready(function () {
+        $('#table_id2').DataTable();
         });
+
+        $(document).ready(function () {
+        $('#table_id3').DataTable();
+        });
+        
+        var reject = (user,id) =>Swal.fire({
+        title: 'Apakah anda yakin',
+        text: "Menolak entry MasukKerja "+id+" ?",
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Tolak!!'
+        }).then((result) => {
+        if (result.value) {
+        Swal.fire({
+        title: "Berhasil mengubah status menjadi 'Reject' pada entry MasukKerja id "+id,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK'
+        }).then((result) => {
+        if (result.value) {
+        location.href ="/admin/rejectentry/"+user+"/"+id;
+        }
+        })
+        }});
+
+        var accept = (user,id) =>Swal.fire({
+        title: 'Apakah anda yakin',
+        text: "Menerima entry MasukKerja "+id+" ?",
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Terima!!'
+        }).then((result) => {
+        if (result.value) {
+        Swal.fire({
+        title: "Berhasil mengubah status menjadi 'Accept' pada entry MasukKerja id "+id,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK'
+        }).then((result) => {
+        if (result.value) {
+        location.href ="/admin/acceptentry/"+user+"/"+id;
+        }
+        })
+        }});
+
     </script>
 </body>
 

@@ -54,7 +54,6 @@ public class RequestQuota implements Serializable {
     @Column(name = "Manajernote")
     private String manajernote;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "Picnote")
     private String picnote;
@@ -83,6 +82,19 @@ public class RequestQuota implements Serializable {
         this.manajernote = manajernote;
         this.picnote = picnote;
         this.status = status;
+    }
+
+    public RequestQuota(Department manajer, int quota, String manajernote, String status) {
+        this.quota = quota;
+        this.manajernote = manajernote;
+        this.manajer = manajer;
+        this.pic = new Employee("E0001");
+        this.status = status;
+    }
+
+    public RequestQuota(int quota, String manajernote) {
+        this.quota = quota;
+        this.manajernote = manajernote;
     }
 
     public Integer getId() {
@@ -165,5 +177,5 @@ public class RequestQuota implements Serializable {
     public String toString() {
         return "com.finalmcc.covidsystem.entities.RequestQuota[ id=" + id + " ]";
     }
-    
+
 }

@@ -40,7 +40,7 @@ public class Question implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 200)
+    @Size(min = 1, max = 1000)
     @Column(name = "Question")
     private String question;
     @Basic(optional = false)

@@ -18,7 +18,7 @@ The above copyright notice and this permission notice shall be included in all c
         <link rel="icon" type="image/png" href="/assets/img/new_logo.png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title>
-            Manajer
+            Karyawan
         </title>
         <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
         <!--     Fonts and icons     -->
@@ -40,33 +40,27 @@ The above copyright notice and this permission notice shall be included in all c
     
             Tip 2: you can also add an image using data-image tag
                 -->
-                <div class="logo"><a th:href="@{'/manajer/'+${user.Id}}" class="simple-text logo-normal">
+                <div class="logo"><a th:href="@{'/employee/'+${user.Id}}" class="simple-text logo-normal">
                         MasukKerja
                     </a></div>
                 <div class="sidebar-wrapper">
                     <ul class="nav">
                         <li class="nav-item ">
-                            <a class="nav-link" th:href="@{'/manajer/'+${user.Id}}">
+                            <a class="nav-link" th:href="@{'/employee/'+${user.Id}}">
                                 <i class="material-icons">recent_actors</i>
                                 <p>Profile dan Informasi</p>
                             </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" th:href="@{'/manajer/answer/'+${user.Id}}">
+                            <a class="nav-link" th:href="@{'/employee/answer/'+${user.Id}}">
                                 <i class="material-icons">format_list_numbered</i>
                                 <p>Jawab Pertanyaan</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{'/manajer/history/'+${user.Id}}">
+                            <a class="nav-link" th:href="@{'/employee/history/'+${user.Id}}">
                                 <i class="material-icons">content_paste</i>
                                 <p>Lihat Riwayat Anda</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{'/manajer/department/'+${user.Id}}">
-                                <i class="material-icons">groups</i>
-                                <p>Manajemen Department</p>
                             </a>
                         </li>
 
@@ -122,128 +116,84 @@ The above copyright notice and this permission notice shall be included in all c
                         <div class="col-md-12">
                             <div class="card card-stats">
                                 <div class="card-header card-header-primary">
-                                    <h4 class="card-title ">Jawab Pertanyaan</h4>
+                                    <h4 class="card-title ">Panduan Jawab Pertanyaan</h4>
                                     <br>
                                     <h6 class="card-title">
-                                        Untuk dapat MasukKerja besok, maka anda perlu menjawab beberapa pertanyaan terlebih dahulu.
-                                        <br> Pertanyaan tersebut akan dihitung bobotnya, dan Admin akan menentukan apakah anda dapat MasukKerja besok atau tidak.
-                                        <br> Anda dapat submit pertanyaan setelah pukul 17:00 WIB.
+                                        Jangan berpindah ke halaman lain selagi menjawab pertanyaan (kecuali klik tombol next & submit)
+                                        <br> Anda tidak dapat kembali ke pertanyaan sebelumnya.
+                                        <br> Mohon isi semua pertanyaan dengan jujur, kesehatan anda menyangkut kesehatan kami bersama.
                                     </h6>
                                 </div>
                             </div>
                         </div>
-                        <div class="card card-body" th:if="${note}">
+                        <div class="card card-body" th:if="${covid}">
                             <div class="card-header card-header-danger card-header-icon ">
                                 <div class="card-icon">
                                     <i class="material-icons">help</i>
                                 </div>
-                                <h3 class="card-title">MENGISI NOTE KE ADMIN
+                                <h3 class="card-title">QUESTION SECTION : COVID
                                 </h3>
-                                <h4 class="card-title"> Silahkan Mengisi Note yang ingin anda sampaikan ke admin terkait Entry anda besok
-                                    <br><b>WAJIB DIISI! Tulis (-) jika tidak ada yang ingin anda isi</b>
-                                </h4>
-                                <form th:action="@{'/manajer/savenote/'+${user.Id}}" th:object="${answer}" method="post">
-                                    <label>Note</label>
-                                    <input type="text" class="form-control" th:field="*{jawab}"/>
-                                    <button type="submit" class="btn btn-outline-secondary" style="margin-top: 0px;margin-left: 750px;">SUBMIT</button>
+                                <h4 class="card-title" th:text="${que.Question}"></h4>
+                                <form th:action="@{'/employee/saveanswercovid/'+${user.Id}}" th:object="${answer}" method="post">
+                                    <fieldset class="form-group" style="float: left;" required>
+                                        <div class="row">
+                                            <label style="margin-left: 15px;">Jawaban Anda : </label>
+                                            <div class="col-sm-10">
+                                                <div class="radio">
+                                                    <input type="radio" id="negatif-rb" name="optradio" th:value="yes" th:field="*{jawab}" required/>
+                                                    <label for="negatif-rb">Ya</label>
+                                                </div>
+                                                <div class="radio">
+                                                    <input type="radio" id="reaktif-rb" name="optradio" th:value="no" th:field="*{jawab}"/>
+                                                    <label for="reaktif-rb">Tidak</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <button type="submit" th:if="${next}" class="btn btn-outline-secondary" style="margin-top: 0px;margin-left: 650px;">Pertanyaan Selanjutnya -> </button>
+                                    <button type="submit" th:if="${finish}" class="btn btn-outline-secondary" style="margin-top: 0px;margin-left: 750px;">SUBMIT</button>
+                                </form>
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="card card-body" th:if="${urgency}">
+                            <div class="card-header card-header-danger card-header-icon ">
+                                <div class="card-icon">
+                                    <i class="material-icons">help</i>
+                                </div>
+                                <h3 class="card-title">QUESTION SECTION : URGENCY
+                                </h3>
+                                <h4 class="card-title" th:text="${que.Question}"></h4>
+                                <form th:action="@{'/employee/saveanswerurgency/'+${user.Id}}" th:object="${answer}" method="post">
+                                    <fieldset class="form-group" style="float: left;" required>
+                                        <div class="row">
+                                            <label style="margin-left: 15px;">Jawaban Anda : </label>
+                                            <div class="col-sm-10">
+                                                <div class="radio">
+                                                    <input type="radio" id="negatif-rb" name="optradio" th:value="yes" th:field="*{jawab}" required/>
+                                                    <label for="negatif-rb">Ya</label>
+                                                </div>
+                                                <div class="radio">
+                                                    <input type="radio" id="reaktif-rb" name="optradio" th:value="no" th:field="*{jawab}"/>
+                                                    <label for="reaktif-rb">Tidak</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <button type="submit" th:if="${next}" class="btn btn-outline-secondary" style="margin-top: 0px;margin-left: 650px;">Pertanyaan Selanjutnya -> </button>
+                                    <button type="submit" th:if="${finish}" class="btn btn-outline-secondary" style="margin-top: 0px;margin-left: 750px;">SUBMIT</button>
                                 </form>
                             </div>
                         </div>
 
-                        <div class="card card-body" th:if="${valid}">
-                            <div class="card-header card-header-danger card-header-icon ">
-                                <div class="card-icon">
-                                    <i class="material-icons">help</i>
-                                </div>
-                                <h3 class="card-title">List Pertanyaan
-                                </h3>
-
-                                <h4 class="card-title">Klik tombol dibawah untuk memulai menjawab pertanyaan </h4>
-                                <a th:href="@{'/manajer/answercovid/'+${user.Id}}" class="btn btn-outline-secondary" style="margin-top: 0px;margin-left: 650px;" >Mulai Jawab Pertanyaan</a>
-                            </div>
-                        </div>
-
-                        <div class="card card-body" th:if="${tidaklolos}">
-                            <div class="card-header card-header-danger card-header-icon ">
-                                <div class="card-icon">
-                                    <i class="material-icons">help</i>
-                                </div>
-                                <h3 class="card-title">TIDAK LOLOS! 
-                                </h3>
-
-                                <h4 class="card-title"><b>Anda TIDAK LOLOS pertanyaan bobot Covid!</b>
-                                    <br>Bobot Covid anda <b><span th:text="${hasilcovid}"></span></b>, dimana maksimal hanya 3 saja untuk bisa masuk kerja.
-                                    <br>Jaga kesehatan ya, dirumah aja dulu! :)
-                                </h4>
-
-                            </div>
-                        </div>
-
-                        <div class="card card-body" th:if="${realfinish}">
-                            <div class="card-header card-header-danger card-header-icon ">
-                                <div class="card-icon">
-                                    <i class="material-icons">help</i>
-                                </div>
-                                <h3 class="card-title">Sudah Selesai! 
-                                </h3>
-
-                                <h4 class="card-title">Anda lolos menjawab pertanyaan, tunggu pengumuman dari Admin maksimal jam 21:00 WIB </h4>
-
-                            </div>
-                        </div>
-                        <div class="card card-body" th:if="${jawaburgency}">
-                            <div class="card-header card-header-danger card-header-icon ">
-                                <div class="card-icon">
-                                    <i class="material-icons">help</i>
-                                </div>
-                                <h3 class="card-title">List Pertanyaan Urgency
-                                </h3>
-
-                                <h4 class="card-title">Selamat, anda lolos bobot Covid! Bobot Covid anda <span th:text="${hasilcovid}"></span><br>Sekarang, karena department anda bisa online, silahkan jawab Pertanyaan Urgency</h4>
-                                <a th:href="@{'/manajer/answerurgency/'+${user.Id}}" class="btn btn-outline-secondary" style="margin-top: 0px;margin-left: 650px;" >Mulai Jawab Pertanyaan</a>
 
 
-                            </div>
-                        </div>
-                        <div class="card card-body" th:if="${nodata}">
-                            <div class="card-header card-header-danger card-header-icon ">
-                                <div class="card-icon">
-                                    <i class="material-icons">info</i>
-                                </div>
-                                <h3 class="card-title">Pertanyaan Tidak Tersedia<br></h3>
-                                <h4 class="card-title">Tidak ditemukan data Rapid Active! Portal Pertanyaan hanya akan terbuka jika ada data Rapid Active dan Negatif <br>Anda WAJIB mengikuti Rapid Test berikutnya!</h4>
 
-
-                                <h4 class="card-title"></h4>
-
-                            </div>
-                        </div>
-                        <div class="card card-body" th:if="${belumjam5}">
-                            <div class="card-header card-header-danger card-header-icon ">
-                                <div class="card-icon">
-                                    <i class="material-icons">info</i>
-                                </div>
-                                <h3 class="card-title">Pertanyaan Belum Tersedia<br></h3>
-                                <h4 class="card-title">Portal Pertanyaan hanya dibuka setelah pukul 17:00 WIB. Mohon menunggu sampai melewati pukul 17:00 WIB</h4>
-
-
-                                <h4 class="card-title"></h4>
-
-                            </div>
-                        </div>
-                        <div class="card card-body" th:if="${invalid}">
-                            <div class="card-header card-header-danger card-header-icon ">
-                                <div class="card-icon">
-                                    <i class="material-icons">info</i>
-                                </div>
-                                <h3 class="card-title">Pertanyaan Tidak Tersedia<br></h3>
-                                <h4 class="card-title">Anda tidak perlu Jawab Pertanyaan, karena besok bukan jadwal group anda! </h4>
-
-
-                                <h4 class="card-title"></h4>
-
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <footer class="footer">

@@ -61,7 +61,6 @@ public class Entry implements Serializable {
     @Column(name = "Urgencyweight")
     private Integer urgencyweight;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "Employeenote")
     private String employeenote;
@@ -95,6 +94,15 @@ public class Entry implements Serializable {
         this.tomorrowdate = tomorrowdate;
     }
 
+    
+    public Entry(Date datetime, int covidweight, String status, Date tomorrowdate, Employee emp) {
+        this.datetime = datetime;
+        this.covidweight = covidweight;
+        this.status = status;
+        this.employee=emp;
+        this.tomorrowdate = tomorrowdate;
+    }
+    
     public Integer getId() {
         return id;
     }

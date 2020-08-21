@@ -112,34 +112,134 @@ The above copyright notice and this permission notice shall be included in all c
             </nav>
             <!-- End Navbar -->
             <div class="content">
-                <div class="container-fluid">
-                    <div class="col-md-12">
-                        <div class="card card-stats">
-                            <div class="card-header card-header-primary">
-                                <h4 class="card-title ">Jawab Pertanyaan</h4>
-                                <br>
-                                <h6 class="card-title">
-                                   Untuk dapat MasukKerja besok, maka anda perlu menjawab beberapa pertanyaan terlebih dahulu.
-                                   <br> Pertanyaan tersebut akan dihitung bobotnya, dan Admin akan menentukan apakah anda dapat MasukKerja besok atau tidak.
-                                   <br> Anda dapat submit pertanyaan setelah pukul 17:00 WIB.
-                                 </h6>
+                    <div class="container-fluid">
+                        <div class="col-md-12">
+                            <div class="card card-stats">
+                                <div class="card-header card-header-primary">
+                                    <h4 class="card-title ">Jawab Pertanyaan</h4>
+                                    <br>
+                                    <h6 class="card-title">
+                                        Untuk dapat MasukKerja besok, maka anda perlu menjawab beberapa pertanyaan terlebih dahulu.
+                                        <br> Pertanyaan tersebut akan dihitung bobotnya, dan Admin akan menentukan apakah anda dapat MasukKerja besok atau tidak.
+                                        <br> Anda dapat submit pertanyaan setelah pukul 17:00 WIB.
+                                    </h6>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card card-body">
-                        <div class="card-header card-header-danger card-header-icon ">
-                            <div class="card-icon">
-                                <i class="material-icons">help</i>
+                        <div class="card card-body" th:if="${note}">
+                            <div class="card-header card-header-danger card-header-icon ">
+                                <div class="card-icon">
+                                    <i class="material-icons">help</i>
+                                </div>
+                                <h3 class="card-title">MENGISI NOTE KE ADMIN
+                                </h3>
+                                <h4 class="card-title"> Silahkan Mengisi Note yang ingin anda sampaikan ke admin terkait Entry anda besok
+                                    <br><b>WAJIB DIISI! Tulis (-) jika tidak ada yang ingin anda isi</b>
+                                </h4>
+                                <form th:action="@{'/employee/savenote/'+${user.Id}}" th:object="${answer}" method="post">
+                                    <label>Note</label>
+                                    <input type="text" class="form-control" th:field="*{jawab}"/>
+                                    <button type="submit" class="btn btn-outline-secondary" style="margin-top: 0px;margin-left: 750px;">SUBMIT</button>
+                                </form>
                             </div>
-                            <h3 class="card-title">List Pertanyaan
-                            </h3>
-                            
-                            <h4 class="card-title"></h4>
+                        </div>
 
+                        <div class="card card-body" th:if="${valid}">
+                            <div class="card-header card-header-danger card-header-icon ">
+                                <div class="card-icon">
+                                    <i class="material-icons">help</i>
+                                </div>
+                                <h3 class="card-title">List Pertanyaan
+                                </h3>
+
+                                <h4 class="card-title">Klik tombol dibawah untuk memulai menjawab pertanyaan </h4>
+                                <a th:href="@{'/employee/answercovid/'+${user.Id}}" class="btn btn-outline-secondary" style="margin-top: 0px;margin-left: 650px;" >Mulai Jawab Pertanyaan</a>
+                            </div>
+                        </div>
+
+                        <div class="card card-body" th:if="${tidaklolos}">
+                            <div class="card-header card-header-danger card-header-icon ">
+                                <div class="card-icon">
+                                    <i class="material-icons">help</i>
+                                </div>
+                                <h3 class="card-title">TIDAK LOLOS! 
+                                </h3>
+
+                                <h4 class="card-title"><b>Anda TIDAK LOLOS pertanyaan bobot Covid!</b>
+                                    <br>Bobot Covid anda <b><span th:text="${hasilcovid}"></span></b>, dimana maksimal hanya 3 saja untuk bisa masuk kerja.
+                                    <br>Jaga kesehatan ya, dirumah aja dulu! :)
+                                </h4>
+
+                            </div>
+                        </div>
+
+                        <div class="card card-body" th:if="${realfinish}">
+                            <div class="card-header card-header-danger card-header-icon ">
+                                <div class="card-icon">
+                                    <i class="material-icons">help</i>
+                                </div>
+                                <h3 class="card-title">Sudah Selesai! 
+                                </h3>
+
+                                <h4 class="card-title">Anda lolos menjawab pertanyaan, tunggu pengumuman dari Admin maksimal jam 21:00 WIB </h4>
+
+                            </div>
+                        </div>
+                        <div class="card card-body" th:if="${jawaburgency}">
+                            <div class="card-header card-header-danger card-header-icon ">
+                                <div class="card-icon">
+                                    <i class="material-icons">help</i>
+                                </div>
+                                <h3 class="card-title">List Pertanyaan Urgency
+                                </h3>
+
+                                <h4 class="card-title">Selamat, anda lolos bobot Covid! Bobot Covid anda <span th:text="${hasilcovid}"></span><br>Sekarang, karena department anda bisa online, silahkan jawab Pertanyaan Urgency</h4>
+                                <a th:href="@{'/employee/answerurgency/'+${user.Id}}" class="btn btn-outline-secondary" style="margin-top: 0px;margin-left: 650px;" >Mulai Jawab Pertanyaan</a>
+
+
+                            </div>
+                        </div>
+                        <div class="card card-body" th:if="${nodata}">
+                            <div class="card-header card-header-danger card-header-icon ">
+                                <div class="card-icon">
+                                    <i class="material-icons">info</i>
+                                </div>
+                                <h3 class="card-title">Pertanyaan Tidak Tersedia<br></h3>
+                                <h4 class="card-title">Tidak ditemukan data Rapid Active! Portal Pertanyaan hanya akan terbuka jika ada data Rapid Active dan Negatif <br>Anda WAJIB mengikuti Rapid Test berikutnya!</h4>
+
+
+                                <h4 class="card-title"></h4>
+
+                            </div>
+                        </div>
+                        <div class="card card-body" th:if="${belumjam5}">
+                            <div class="card-header card-header-danger card-header-icon ">
+                                <div class="card-icon">
+                                    <i class="material-icons">info</i>
+                                </div>
+                                <h3 class="card-title">Pertanyaan Belum Tersedia<br></h3>
+                                <h4 class="card-title">Portal Pertanyaan hanya dibuka setelah pukul 17:00 WIB. Mohon menunggu sampai melewati pukul 17:00 WIB</h4>
+
+
+                                <h4 class="card-title"></h4>
+
+                            </div>
+                        </div>
+                        <div class="card card-body" th:if="${invalid}">
+                            <div class="card-header card-header-danger card-header-icon ">
+                                <div class="card-icon">
+                                    <i class="material-icons">info</i>
+                                </div>
+                                <h3 class="card-title">Pertanyaan Tidak Tersedia<br></h3>
+                                <h4 class="card-title">Anda tidak perlu Jawab Pertanyaan, karena besok bukan jadwal group anda! </h4>
+
+
+                                <h4 class="card-title"></h4>
+
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
            <footer class="footer">
                         <div class="container-fluid">
                             <div class="copyright float-right">

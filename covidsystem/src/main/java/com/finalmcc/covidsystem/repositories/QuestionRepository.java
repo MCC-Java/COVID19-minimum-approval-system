@@ -24,6 +24,14 @@ public interface QuestionRepository extends JpaRepository<Question ,Integer> {
     @Query(value = "SELECT * FROM question WHERE Isactive='True'", nativeQuery = true)
     List<Question> findactive();
     
+    @Modifying
+    @Query(value = "SELECT * FROM question WHERE Section='Covid' AND Isactive='True'", nativeQuery = true)
+    List<Question> findcovidactive();
+    
+     @Modifying
+    @Query(value = "SELECT * FROM question WHERE Section='Urgency' AND Isactive='True'", nativeQuery = true)
+    List<Question> findurgencyactive();
+    
      @Modifying
     @Query(value = "SELECT * FROM question WHERE Isactive='False'", nativeQuery = true)
     List<Question> findnonactive();

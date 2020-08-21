@@ -91,7 +91,9 @@ public class Department implements Serializable {
         this.canonline = canonline;
         this.code = code;
     }
-
+    
+    
+    
     public String getId() {
         return id;
     }

@@ -42,6 +42,10 @@ public class RequestQuotaServices {
         return reqrepo.findpending();
     }
 
+     public List<RequestQuota> getbydept(String manajer) {
+        return reqrepo.findbydept(manajer);
+    }
+    
     public void acc(String user, String text,Integer kode){
         reqrepo.acc(user, text, kode);
         deptrepo.ubahquota(reqrepo.findById(kode).get().getQuota(), reqrepo.findById(kode).get().getManajer().getId());
@@ -49,6 +53,14 @@ public class RequestQuotaServices {
     
     public void rej(String user, String text,Integer kode){
         reqrepo.rej(user, text, kode);
+    }
+    
+    public void savereq(Integer quota, String note, String emp ){
+        reqrepo.savereq(quota, note, emp);
+    }
+    
+    public int countbydept(String manajer){
+        return reqrepo.countactive(manajer);
     }
     
 }

@@ -34,7 +34,14 @@ public interface GroupCodeRepository extends JpaRepository<GroupCode, GroupCodeP
     @Modifying
     @Query(value = "UPDATE group_code SET Isactive='False' WHERE Isactive='True' AND Startdate=:date", nativeQuery = true)
     void setfalse(@Param("date") Date date);
-    
-    @Query(value="SELECT * FROM group_code ORDER BY StartDate, FIELD(Day,'Monday','Tuesday','Wednesday','Thursday','Friday') ", nativeQuery = true)
+
+    @Query(value = "SELECT * FROM group_code ORDER BY StartDate, FIELD(Day,'Monday','Tuesday','Wednesday','Thursday','Friday') ", nativeQuery = true)
     List<GroupCode> getall();
+
+    @Query(value = "SELECT Code FROM group_code WHERE Isactive='True' AND Day=:day", nativeQuery = true)
+    String getdaygroup(@Param("day") String day);
+
+    
+    
+
 }

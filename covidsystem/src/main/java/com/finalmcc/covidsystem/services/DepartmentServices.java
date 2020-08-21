@@ -7,6 +7,7 @@ package com.finalmcc.covidsystem.services;
 
 import com.finalmcc.covidsystem.entities.Department;
 import com.finalmcc.covidsystem.repositories.DepartmentRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,10 @@ public class DepartmentServices {
     
     public void ubahquota(String id, Integer quota){
         deptrepo.findById(id).get().setQuota(quota);
+    }
+    
+    public List<Department> getbygroup(String code){
+        return deptrepo.getgroupcode(code);
     }
     
 }

@@ -7,6 +7,7 @@ package com.finalmcc.covidsystem.services;
 
 import com.finalmcc.covidsystem.entities.GroupCode;
 import com.finalmcc.covidsystem.repositories.GroupCodeRepository;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,6 +27,9 @@ public class GroupCodeServices {
     @Autowired
     GroupCodeRepository grouprepo;
 
+    @Autowired
+    DateServices dateservices;
+    
     public String soondate() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Calendar c = Calendar.getInstance();
@@ -73,6 +77,11 @@ public class GroupCodeServices {
         }
     }
 
+    public String gettomorrowgroup() throws ParseException{
+        return grouprepo.getdaygroup(dateservices.gettomorrowday());
+    }
+    
+    
     public List<GroupCode> getall() {
         return grouprepo.getall();
     }

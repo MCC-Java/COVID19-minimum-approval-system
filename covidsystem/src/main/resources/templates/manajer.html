@@ -12,71 +12,71 @@ The above copyright notice and this permission notice shall be included in all c
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8" />
-    <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="/assets/img/new_logo.png">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>
-        Manajer
-    </title>
-    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-    <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css"
-        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-    <!-- CSS Files -->
-    <link href="/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js">
-    </script>
-</head>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png">
+        <link rel="icon" type="image/png" href="/assets/img/new_logo.png">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <title>
+            Manajer
+        </title>
+        <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+        <!--     Fonts and icons     -->
+        <link rel="stylesheet" type="text/css"
+              href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+        <!-- CSS Files -->
+        <link href="/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js">
+        </script>
+    </head>
 
-<body class="">
-    <div class="wrapper ">
-        <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar-1.jpg">
-            <!--
-        Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+    <body class="">
+        <div class="wrapper ">
+            <div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar-1.jpg">
+                <!--
+            Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+    
+            Tip 2: you can also add an image using data-image tag
+                -->
+                <div class="logo"><a th:href="@{'/manajer/'+${user.Id}}" class="simple-text logo-normal">
+                        MasukKerja
+                    </a></div>
+                <div class="sidebar-wrapper">
+                    <ul class="nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" th:href="@{'/manajer/'+${user.Id}}">
+                                <i class="material-icons">recent_actors</i>
+                                <p>Profile dan Informasi</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{'/manajer/answer/'+${user.Id}}">
+                                <i class="material-icons">format_list_numbered</i>
+                                <p>Jawab Pertanyaan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{'/manajer/history/'+${user.Id}}">
+                                <i class="material-icons">content_paste</i>
+                                <p>Lihat Riwayat Anda</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{'/manajer/department/'+${user.Id}}">
+                                <i class="material-icons">groups</i>
+                                <p>Manajemen Department</p>
+                            </a>
+                        </li>
 
-        Tip 2: you can also add an image using data-image tag
-    -->
-            <div class="logo"><a th:href="@{'/manajer/'+${user.Id}}" class="simple-text logo-normal">
-                    MasukKerja
-                </a></div>
-            <div class="sidebar-wrapper">
-                <ul class="nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" th:href="@{'/manajer/'+${user.Id}}">
-                            <i class="material-icons">recent_actors</i>
-                            <p>Profile dan Informasi</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{'/manajer/answer/'+${user.Id}}">
-                            <i class="material-icons">format_list_numbered</i>
-                            <p>Jawab Pertanyaan</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{'/manajer/history/'+${user.Id}}">
-                            <i class="material-icons">content_paste</i>
-                            <p>Lihat Riwayat Anda</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{'/manajer/department/'+${user.Id}}">
-                            <i class="material-icons">groups</i>
-                            <p>Manajemen Department</p>
-                        </a>
-                    </li>
-                    
-                </ul>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="main-panel">
-            <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
-                <div class="container-fluid">
+            <div class="main-panel">
+                <!-- Navbar -->
+                <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+                    <div class="container-fluid">
                         <div class="navbar-wrapper">
                             <div class="card-icon">
                                 <i class="material-icons">today</i>
@@ -107,7 +107,7 @@ The above copyright notice and this permission notice shall be included in all c
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
 
-                                        
+
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" th:href="@{/index}">LogOut Button</a>
                                     </div>
@@ -115,74 +115,75 @@ The above copyright notice and this permission notice shall be included in all c
                             </ul>
                         </div>
                     </div>
-            </nav>
-            <!-- End Navbar -->
-            <div class="content">
-                <div class="container-fluid">
-                    <div class="col-md-12">
-                        <div class="card card-stats">
-                            <div class="card-header card-header-primary">
-                                <h4 class="card-title ">Profile Manajer</h4>
-                                <br>
-                                <h6 class="card-title">
-                                    ID Manajer : <span th:text="${user.Id}"></span>
-                                </h6>
-                                <h6 class="card-title">
-                                    Nama Manajer : <span th:text="${user.Name}"></span>
-                                 </h6>
-                                 <h6 class="card-title">
-                                    Status COVID : <span th:text="${user.Status}"></span>
-                                 </h6>
-                                 <h6 class="card-title">
-                                    ID Department : <span th:text="${user.Department.Id}"></span>
-                                 </h6>
-                                 <h6 class="card-title">
-                                    Nama Department : <span th:text="${user.Department.Name}"></span>
-                                 </h6>
-                                 <h6 class="card-title">
-                                    Group : <span th:text="${user.Code.Id}"></span>
-                                 </h6>
-                                 <h6 class="card-title">
-                                    Jumlah Masuk Bulan Ini : <span th:text="${user.Countentrybymonth}"></span>
-                                 </h6>
+                </nav>
+                <!-- End Navbar -->
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="col-md-12">
+                            <div class="card card-stats">
+                                <div class="card-header card-header-primary">
+                                    <h4 class="card-title ">Profile Manajer</h4>
+                                    <br>
+                                    <h6 class="card-title">
+                                        ID Manajer : <span th:text="${user.Id}"></span>
+                                    </h6>
+                                    <h6 class="card-title">
+                                        Nama Manajer : <span th:text="${user.Name}"></span>
+                                    </h6>
+                                    <h6 class="card-title">
+                                        Status COVID : <span th:text="${user.Status}"></span>
+                                    </h6>
+                                    <h6 class="card-title">
+                                        ID Department : <span th:text="${user.Department.Id}"></span>
+                                    </h6>
+                                    <h6 class="card-title">
+                                        Nama Department : <span th:text="${user.Department.Name}"></span>
+                                    </h6>
+                                    <h6 class="card-title">
+                                        Group : <span th:text="${user.Code.Id}"></span>
+                                    </h6>
+                                    <h6 class="card-title">
+                                        Jumlah Masuk Bulan Ini : <span th:text="${user.Countentrybymonth}"></span>
+                                    </h6>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card card-body">
-                        <div class="card-header card-header-danger card-header-icon ">
-                            <div class="card-icon">
-                                <i class="material-icons">info</i>
+                        <div class="card card-body">
+                            <div class="card-header card-header-danger card-header-icon ">
+                                <div class="card-icon">
+                                    <i class="material-icons">info</i>
+                                </div>
+                                <h3 class="card-title">Informasi MasukKerja Besok?
+                                </h3>
+                                <h4 class="card-title" th:if="${besokvalid}"> Besok adalah jadwal group anda yaitu <span th:text="${user.Code.Id}"></span>. Mohon submit pertanyaan anda di halaman "JAWAB PERTANYAAN"</h4>
+                                <h4 class="card-title" th:if="${besokinvalid}"> Besok bukan jadwal group anda. Anda tidak perlu mengisi pertanyaan!</h4>
+                                <h4 class="card-title" th:if="${nodata}"> Anda tidak bisa masuk kerja besok! Tidak ditemukan data Rapid Active! <br>Portal Pertanyaan hanya akan terbuka jika ada data Rapid Active dan Hasil Negatif, Anda WAJIB mengikuti Rapid Test berikutnya!</h4>
+                                <h4 class="card-title" th:if="${accept}"> Selamat, Request Anda disetujui oleh Admin, anda bisa masuk kerja besok! 
+                                    <br> Tetap patuhi protokol kesehatan ya!
+                                </h4>
+                                <h4 class="card-title" th:if="${reject}"> Maaf, Request Entry MasukKerja anda ditolak, anda tidak bisa masuk kerja besok
+                                    <br> Jaga kesehatan dirumah ya! 
+                                </h4>
+                                <h4 class="card-title" th:if="${pending}"> Anda lolos menjawab pertanyaan, dan request anda sedang ditinjau oleh admin. Tunggu pengumuman dari Admin maksimal jam 21:00 WIB
+                                </h4>
                             </div>
-                            <h3 class="card-title">Informasi MasukKerja Besok?
-                            </h3>
-                            <h4 class="card-title"> if bkan grup -> Anda tidak perlu masuk kerja besok karena besok bukan jadwal Group anda.
-                            </h4>
-                            <h4 class="card-title">if tdk ditemukan id entry di hari itu-> Anda perlu mengisi pertanyaan terlebih dahulu.
-                            </h4>
-                            <h4 class="card-title">if ditemukan id entry di hari itu &stat pending-> Mohon menunggu pengumuman pukul 20:00 WIB hari ini.
-                            </h4>
-                            <h4 class="card-title">if ditemukan id entry di hari itu&status accept-> Selamat, Anda boleh MasukKerja besok! Patuhi protokol kesehatan ya!
-                            </h4>
-                            <h4 class="card-title">if ditemukan id entry di hari itu&status reject->Maaf, Anda belum lolos MasukKerja besok! Stay Safe dirumah yaa!
-                            </h4>
                         </div>
                     </div>
                 </div>
-            </div>
-            <footer class="footer">
-                        <div class="container-fluid">
-                            <div class="copyright float-right">
-                                2020 &copy;, made with <i class="material-icons">favorite</i> by
-                                <a href="https://www.instagram.com/jessifebria/" target="_blank">Jessi Febria</a>
-                            </div>
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="copyright float-right">
+                            2020 &copy;, made with <i class="material-icons">favorite</i> by
+                            <a href="https://www.instagram.com/jessifebria/" target="_blank">Jessi Febria</a>
                         </div>
-                    </footer>
+                    </div>
+                </footer>
+            </div>
         </div>
-    </div>
 
     </div>
     <!--   Core JS Files   -->
-     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="/assets/js/core/jquery.min.js"></script>
     <script src="/assets/js/core/popper.min.js"></script>
     <script src="/assets/js/core/bootstrap-material-design.min.js"></script>
@@ -225,10 +226,10 @@ The above copyright notice and this permission notice shall be included in all c
     <script src="/assets/demo/demo.js"></script>
     <script>
         $(document).ready(function () {
-            $('#table_id').DataTable();
+        $('#table_id').DataTable();
         });
 
-       
+
     </script>
 </body>
 
